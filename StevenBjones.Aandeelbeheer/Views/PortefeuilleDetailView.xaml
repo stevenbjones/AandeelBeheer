@@ -1,0 +1,64 @@
+﻿<UserControl x:Class="StevenBjones.Aandeelbeheer.Views.PortefeuilleDetailView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:StevenBjones.Aandeelbeheer.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock
+			 Text="{Binding Titel}"			
+			Grid.Row="0"
+			 ></TextBlock>
+        <Grid
+			 Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            
+            <TextBlock
+				Text="Id: "
+				HorizontalAlignment="Right"
+				Grid.Row="0" Grid.Column="0"
+				></TextBlock>
+            <TextBlock
+				Text="Naam: "
+				HorizontalAlignment="Right"
+				Grid.Row="1" Grid.Column="0"
+				></TextBlock>
+            <TextBlock
+				Text="Aandelen: "
+				HorizontalAlignment="Right"
+				Grid.Row="2" Grid.Column="0"
+				></TextBlock>
+            <TextBlock
+				Text="{Binding Portefeuille.Id}"
+				Grid.Row="0" Grid.Column="1"
+				></TextBlock>
+            <TextBlock
+				Text="{Binding Portefeuille.Eigenaar}"
+				Grid.Row="1" Grid.Column="1"
+				></TextBlock>
+            <ListBox
+				ItemsSource="{Binding Portefeuille.Aandelen}"
+				Grid.Row="2" Grid.Column="1"
+				></ListBox>
+        </Grid>
+        <StatusBar
+			 Grid.Row="2"
+			 >
+        </StatusBar>
+    </Grid>
+</UserControl>
