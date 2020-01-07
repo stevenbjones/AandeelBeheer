@@ -31,6 +31,7 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
             AddCommand = new RelayCommand(AddAandeel);
         }
 
+        //Haal Aandelen op uit dataset
         public void RefreshAandelen()
         {
             Aandelen = new ObservableCollection<Aandeel>(_repository.GetPortefeuilleMetID(Portefeuille).Aandelen);
@@ -38,6 +39,7 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
 
         #region properties
 
+        //Property die gebruikt wordt voor foutmelding
         public string Error { get; set; }
 
         public Portefeuille Portefeuille
@@ -160,6 +162,7 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
 
         public event Action AddAandeelRequested;
 
+        //Ga naar addAandeel view
         public void AddAandeel()
         {
             AddAandeelRequested?.Invoke();

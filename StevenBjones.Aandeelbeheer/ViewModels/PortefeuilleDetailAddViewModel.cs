@@ -49,6 +49,7 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
 
         public RelayCommand SaveCommand { get; }
 
+        //Opslaan van de nieuwe portefeuille
         public void SaveChanges()
         {
             if (Addportefeuille.Eigenaar == null)
@@ -69,6 +70,7 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
 
         public RelayCommand CancelCommand { get; set; }
 
+        //Ga terug naar vorige view
         public void CancelChanges()
         {
             Addportefeuille = new Portefeuille();

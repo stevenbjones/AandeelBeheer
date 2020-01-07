@@ -58,6 +58,9 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
 
         public RelayCommand SaveCommand { get; private set; }
 
+        /// <summary>
+        /// Voeg het aandeel toe aan de dataset
+        /// </summary>
         public void SaveChanges()
         {
             if (AddAandeel.Bedrijf == null)
@@ -87,6 +90,7 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
 
         public RelayCommand CancelCommand { get; set; }
 
+        //Ga naar portefeuilledetailEditView
         public void CancelChanges()
         {
 
@@ -99,6 +103,7 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
 
         public RelayCommand BedrijfCommand { get; set; }
 
+        //Ga naar het bedrijf view
         public void BedrijfView()
         {
             ReturnToViewRequested?.Invoke(false, _bedrijfListViewModel);

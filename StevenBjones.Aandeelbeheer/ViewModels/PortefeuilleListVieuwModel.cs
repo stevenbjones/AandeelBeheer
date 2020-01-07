@@ -20,6 +20,10 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
         private ObservableCollection<Portefeuille> _portefeuilles;
         private Portefeuille _selectedPortefeuille;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="repository">De repository die gebruikt wordt voor het aanspreken van de dataset</param>
         public PortefeuilleListVieuwModel(AandeelbeheerRepository repository)
         {
             _repository = repository;
@@ -72,12 +76,10 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
 
         //Kijkt of de selectedPortefeuille null is. 
         //Als deze null is zal hij een false retourneren.
-
         private Boolean CanDeletePortefeuille()
         {
             return _selectedPortefeuille != null;
         }
-
 
         #endregion
 
@@ -87,6 +89,7 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
 
         public event Action AddPortefeuilleRequested;
 
+        //Ga naar addPortefeuille view
         public void AddPortefeuille()
         {
             AddPortefeuilleRequested?.Invoke();

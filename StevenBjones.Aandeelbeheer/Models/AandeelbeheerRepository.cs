@@ -14,6 +14,10 @@ namespace StevenBjones.Aandeelbeheer.Models
     public class AandeelbeheerRepository
     {
         private AandeelbeheerContext _context;
+
+        /// <summary>
+        /// Constructor 
+        /// </summary>
         public AandeelbeheerRepository()
         {
             _context = new AandeelbeheerContext();
@@ -103,6 +107,7 @@ namespace StevenBjones.Aandeelbeheer.Models
             return portefeuille;
         }
 
+        //Haal portefeuille op met een bepaalde ID
         public Portefeuille GetPortefeuilleMetID(Portefeuille portefeuille)
         {
             return _context.Portefeuilles.FirstOrDefault(p => p.Id == portefeuille.Id);

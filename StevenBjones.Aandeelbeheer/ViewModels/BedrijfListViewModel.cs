@@ -31,6 +31,7 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
             AddCommand = new RelayCommand(AddBedrijf);
         }
 
+        //Haal de bedrijven op en steek ze in property bedrijven
         public void RefreshBedrijven()
         {
             Bedrijven = new List<Bedrijf>(_repository.GetBedrijven());
@@ -38,8 +39,10 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
 
         #region properties
 
+        //Property om te laten zien als er een bedrijf verwijderd wordt
         public ObservableCollection<Bedrijf> ObservableBedrijven { get; set; }
 
+        //Lijst van bedrijven in databank
         public List<Bedrijf> Bedrijven { get; set; }
 
         #endregion
@@ -75,6 +78,7 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
 
         public RelayCommand CancelCommand { get; set; }
 
+        //Ga terug naar andere view
         public void CancelChanges()
         {
             ReturnToViewRequested?.Invoke(false);
@@ -108,7 +112,6 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
 
         //Kijkt of de selectedBedrijf null is. 
         //Als deze null is zal hij een false retourneren.
-
         private bool CanDeleteBedrijf()
         {
             return _selectedBedrijf != null;
@@ -123,6 +126,7 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
 
         public event Action AddBedrijfRequested;
 
+        //Ga naar addbedrijf view
         public void AddBedrijf()
         {
             AddBedrijfRequested?.Invoke();

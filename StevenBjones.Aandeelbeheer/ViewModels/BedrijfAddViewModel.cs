@@ -31,8 +31,10 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
 
         #region properties
 
+        //Deze propperty wordt gebruikt voor een error melding te laten zien
         public string Error { get; set; }
 
+        //Deze propperty wordt gebruikt om een bedrijf toe te voegen
         public Bedrijf Bedrijf
         {
             get { return _bedrijf; }
@@ -54,6 +56,7 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
 
         public RelayCommand SaveCommand { get; private set; }
 
+        //Opslaan van het bedrijf
         public void SaveChanges()
         {
 
@@ -76,6 +79,7 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
 
         public RelayCommand CancelCommand { get; set; }
 
+        //Ga terug naar ander scherm
         public void CancelChanges()
         {
             ReturnToViewRequested?.Invoke(false);

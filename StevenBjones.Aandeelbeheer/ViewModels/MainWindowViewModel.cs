@@ -81,7 +81,11 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
         #endregion
 
         #region SetListViewModel
-        
+        /// <summary>
+        /// Methode waar de linker kant van het scherm wordt gezet
+        /// </summary>
+        /// <param name="viewmodel"> viewmodel waar naar veranderd moet worden</param>
+        /// <param name="connect"> Bool die eerst op true staat. hierna wordt hij op false gezet</param>
         public void SetListViewModel(BaseViewModel viewmodel, bool connect = true)
         {
             if (connect && _currentListViewModel != null)
@@ -126,7 +130,6 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
         /// <param name="connect"></param> 
         public void SetDetailViewModel(BaseViewModel viewModel, bool connect = true)
         {
-
             if (connect && CurrentDetailViewModel != null)
                 SetDetailViewModel(CurrentDetailViewModel, false);
             switch (viewModel.GetType().Name)
@@ -266,7 +269,6 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
                 _portefeuilleListVieuwModel.RefreshPortefeuilles();
         }
 
-
         //On property changed van detail edit listview
         private void portefeuilleDetailEditViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
@@ -308,8 +310,9 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
 
         private void _bedrijfListViewModel_ReturnViewRequested(bool refreshBedrijven)
         {
-            SetDetailViewModel(_portefeuilleAddAandeelViewModel);
+            SetDetailViewModel(_portefeuilleDetailViewModel);
             _portefeuilleAddAandeelViewModel.RefreshBedrijven();
+            _portefeuilleListVieuwModel.RefreshPortefeuilles();
         }
 
         private void _bedrijfListViewModel_AddBedrijfRequested()
@@ -318,18 +321,5 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
         }
 
         #endregion
-        /*
-
-        private void portefeuilleDetailAddViewModel(bool refreschPortefeuilles)
-        {
-            SetDetailViewModel(portefeuilleDetailViewModel);
-            if(refreschPortefeuilles)
-            {
-                portefeuilleListVieuwModel.RefreshPortefeuilles();
-            }
-        }
-
-    */
-
     }
 }
