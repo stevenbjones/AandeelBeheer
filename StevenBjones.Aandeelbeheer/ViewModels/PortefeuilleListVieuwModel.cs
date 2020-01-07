@@ -20,6 +20,10 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
         private ObservableCollection<Portefeuille> _portefeuilles;
         private Portefeuille _selectedPortefeuille;
 
+        /// <summary>
+        /// Constructor van PortefeuilleListVieuwModel
+        /// </summary>
+        /// <param name="repository">Repository waar functies staan met requests naar de dataset</param>
         public PortefeuilleListVieuwModel(AandeelbeheerRepository repository)
         {
             _repository = repository;
@@ -92,11 +96,7 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
             AddPortefeuilleRequested?.Invoke();
         }
 
-
-
         #endregion
-
-
 
         #region Edit Portefeuille
         //RelayCommand voor het editen van een portefeuille
