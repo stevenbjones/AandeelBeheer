@@ -274,7 +274,7 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
             {
                 //Deze code gaan we gebruiken voor het weizigen van het aandeel.
                 case "SelectedAandeel":
-                    _portefeuilleDetailEditViewModel.SelectedAandeel = _portefeuilleDetailEditViewModel.SelectedAandeel;                    
+                    _portefeuilleDetailEditViewModel.SelectedAandeel = _portefeuilleDetailEditViewModel.SelectedAandeel;
                     break;
                 default:
                     break;

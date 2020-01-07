@@ -1,24 +1,25 @@
-﻿using StevenBjones.Common;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using StevenBjones.Aandeelbeheer.Data;
 using StevenBjones.Aandeelbeheer.Models;
-using System.Collections.ObjectModel;
+using StevenBjones.Common;
 
 namespace StevenBjones.Aandeelbeheer.ViewModels
 {
-    class BedrijfListViewModel : BaseViewModel
+    internal class BedrijfListViewModel : BaseViewModel
     {
-        private AandeelbeheerRepository _repository;
+        //Repository waar requests van dataset staan
+        private readonly AandeelbeheerRepository _repository;
 
-
+        //Properties variabelen
         private Bedrijf _selectedBedrijf;
-        //Deze wordt gebruikt om visueel te laten zien als er een Bedrijf verwijderd wordt
-        private ObservableCollection<Bedrijf> _observableBedrijven;
 
+        /// <summary>
+        ///     Constructor
+        /// </summary>
+        /// <param name="repository"> Repository waar requests staan naar de dataset</param>
         public BedrijfListViewModel(AandeelbeheerRepository repository)
         {
             _repository = repository;
@@ -30,49 +31,44 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
             AddCommand = new RelayCommand(AddBedrijf);
         }
 
-        public ObservableCollection<Bedrijf> ObservableBedrijven
+        public void RefreshBedrijven()
         {
-            get
-            {
-                return _observableBedrijven;
-            }
-            set
-            {
-                _observableBedrijven = value;
-            }
+            Bedrijven = new List<Bedrijf>(_repository.GetBedrijven());
         }
 
-        public List<Bedrijf> Bedrijven
-        {
-            get;
-            set;
-        }
+        #region properties
+
+        public ObservableCollection<Bedrijf> ObservableBedrijven { get; set; }
+
+        public List<Bedrijf> Bedrijven { get; set; }
+
+        #endregion
+
 
         #region Save changes
 
         //RelayCommand voor de saveCommand
-        public RelayCommand SaveCommand { get; private set; }
+        public RelayCommand SaveCommand { get; }
 
         //Methode waarbij een bedrijf geupdate kan worden. De oude value wordt gelijk gesteld aan de nieuwe van de edit view
         public void SaveChanges()
         {
             Bedrijven = new List<Bedrijf>(_repository.GetBedrijven());
 
-            List<Bedrijf> bedrijvenToDelete = Bedrijven.Except(ObservableBedrijven).ToList();
+            var bedrijvenToDelete = Bedrijven.Except(ObservableBedrijven).ToList();
             Bedrijven = new List<Bedrijf>(ObservableBedrijven);
 
             //Als een bedrijf gedelete wordt zullen ook de aandelen van het bedrijf verwijderd worden
-            foreach (Bedrijf b in bedrijvenToDelete)
-            {
+            foreach (var b in bedrijvenToDelete)
                 _repository.DeleteAandelenVanBedrijf(b);
-            }
 
             _repository.DeleteBedrijven(bedrijvenToDelete);
 
             ReturnToViewRequested?.Invoke(true);
         }
 
-        public event Action<Boolean> ReturnToViewRequested;
+        public event Action<bool> ReturnToViewRequested;
+
         #endregion
 
         #region Cancel changes
@@ -91,7 +87,7 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
         //Haal de geselecteerde Bedrijf op
         public Bedrijf SelectedBedrijf
         {
-            get { return _selectedBedrijf; }
+            get => _selectedBedrijf;
             set
             {
                 if (_selectedBedrijf != value)
@@ -103,16 +99,17 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
         }
 
         //Delete een Bedrijf
-        public RelayCommand DeleteCommand { get; private set; }
+        public RelayCommand DeleteCommand { get; }
+
         private void DeleteBedrijf()
         {
-            _observableBedrijven.Remove(_selectedBedrijf);
+            ObservableBedrijven.Remove(_selectedBedrijf);
         }
 
         //Kijkt of de selectedBedrijf null is. 
         //Als deze null is zal hij een false retourneren.
 
-        private Boolean CanDeleteBedrijf()
+        private bool CanDeleteBedrijf()
         {
             return _selectedBedrijf != null;
         }
@@ -122,7 +119,7 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
 
         #region Add Bedrijf
 
-        public RelayCommand AddCommand { get; private set; }
+        public RelayCommand AddCommand { get; }
 
         public event Action AddBedrijfRequested;
 
@@ -132,10 +129,5 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
         }
 
         #endregion
-
-        public void RefreshBedrijven()
-        {
-            Bedrijven = new List<Bedrijf>(_repository.GetBedrijven());
-        }
     }
 }

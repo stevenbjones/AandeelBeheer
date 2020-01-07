@@ -9,12 +9,21 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
 {
     public class PortefeuilleAddAandeelViewModel : BaseViewModel
     {
+        // declaratie van repository waar requests naar context staan
         private AandeelbeheerRepository _repository;
+
+        //Variabelen voor properties
         private Aandeel _addAandeel = new Aandeel();
         private List<Bedrijf> _bedrijven = new List<Bedrijf>();
+
+        //Views waar naar genavigeerd kan worden
         private PortefeuilleDetailEditViewModel _portefeuilleDetailEditViewModel;
         private BedrijfListViewModel _bedrijfListViewModel;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="repository">Repository waar requests staan naar de datase</param>
         public PortefeuilleAddAandeelViewModel(AandeelbeheerRepository repository)
         {
             _repository = repository;
@@ -27,7 +36,11 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
             _portefeuilleDetailEditViewModel = new PortefeuilleDetailEditViewModel(_repository);
             _bedrijfListViewModel = new BedrijfListViewModel(_repository);
 
+            AddAandeel = new Aandeel();
+
         }
+
+        #region properties
 
         public string Error { get; set; }
 
@@ -35,19 +48,13 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
 
         public ObservableCollection<Bedrijf> Bedrijven { get; set; }
 
-        public Aandeel AddAandeel
-        {
-            get { return _addAandeel; }
-            set
-            {
-                if (_addAandeel != value)
-                {
-                    _addAandeel = value;
-                }
-            }
-        }
+        public Aandeel AddAandeel { get; set; }
+
+        #endregion
 
         public event Action<Boolean, BaseViewModel> ReturnToViewRequested;
+
+        #region Save
 
         public RelayCommand SaveCommand { get; private set; }
 
@@ -69,9 +76,14 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
             _repository.AddAandeel(AddAandeel);
             _repository.UpdatePortefeuille(Selectedportefeuille).Aandelen.Add(AddAandeel);
 
+            AddAandeel = new Aandeel();
 
             ReturnToViewRequested?.Invoke(true, _portefeuilleDetailEditViewModel);
         }
+
+        #endregion
+
+        #region Cancel
 
         public RelayCommand CancelCommand { get; set; }
 
@@ -81,6 +93,10 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
             ReturnToViewRequested?.Invoke(false, _portefeuilleDetailEditViewModel);
         }
 
+        #endregion
+
+        #region BedrijfKnop
+
         public RelayCommand BedrijfCommand { get; set; }
 
         public void BedrijfView()
@@ -88,11 +104,11 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
             ReturnToViewRequested?.Invoke(false, _bedrijfListViewModel);
         }
 
+        #endregion
+
         internal void RefreshBedrijven()
         {
             Bedrijven = _repository.GetBedrijven();
         }
-
-
     }
 }

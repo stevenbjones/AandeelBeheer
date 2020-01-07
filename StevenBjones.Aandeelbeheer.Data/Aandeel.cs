@@ -16,7 +16,6 @@ namespace StevenBjones.Aandeelbeheer.Data
         public int BeginWaarde { get; set; }
         public int ActueleWaarde { get; set; }
         public int Hoeveelheid { get; set; }
-        
 
         //Internal gemaakt zodat bij het gebruiken van de classe er geen ID moet meegeven worden
         internal Aandeel(int id,int beginWaarde, int actueleWaarde, int hoeveelheid)
@@ -40,7 +39,5 @@ namespace StevenBjones.Aandeelbeheer.Data
         {
             return $"{Id} -Begin waarde: {BeginWaarde} - Actuele waarde: {ActueleWaarde} - hoeveelheid:{Hoeveelheid} van {Bedrijf}   ";
         }
-
-
     }
 }

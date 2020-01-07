@@ -1,106 +1,102 @@
-﻿using StevenBjones.Common;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using StevenBjones.Aandeelbeheer.Data;
 using StevenBjones.Aandeelbeheer.Models;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Collections.ObjectModel;
+using StevenBjones.Common;
 
 namespace StevenBjones.Aandeelbeheer.ViewModels
 {
-    class PortefeuilleDetailEditViewModel : BaseViewModel
+    internal class PortefeuilleDetailEditViewModel : BaseViewModel
     {
+        //Repository waar requests van dataset staan
         private AandeelbeheerRepository _repository;
+
+        //Private variabelen voor de properties
+        private Portefeuille _editPortefeuille;
         private Portefeuille _portefeuille;
-
-
         private Aandeel _selectedAandeel;
-        //Deze wordt gebruikt om visueel te laten zien als er een aandeel verwijderd wordt
-        private ObservableCollection<Aandeel> _aandelen;
 
+        /// <summary>
+        ///     Constructor
+        /// </summary>
+        /// <param name="repository"> Repository waar requests staan naar de dataset</param>
         public PortefeuilleDetailEditViewModel(AandeelbeheerRepository repository)
         {
-            _repository = repository;          
+            _repository = repository;
 
             SaveCommand = new RelayCommand(SaveChanges);
             CancelCommand = new RelayCommand(CancelChanges);
-            DeleteCommand = new RelayCommand(DeleteAandeel,CanDeleteAandeel);
-            AddCommand = new RelayCommand(AddAandeel);        
+            DeleteCommand = new RelayCommand(DeleteAandeel, CanDeleteAandeel);
+            AddCommand = new RelayCommand(AddAandeel);
         }
 
+        public void RefreshAandelen()
+        {
+            Aandelen = new ObservableCollection<Aandeel>(_repository.GetPortefeuilleMetID(Portefeuille).Aandelen);
+        }
+
+        #region properties
+
         public string Error { get; set; }
+
         public Portefeuille Portefeuille
         {
-            get { return _portefeuille; }
+            get => _portefeuille;
             set
             {
                 if (_portefeuille != value)
-                {                   
+                {
                     _portefeuille = value;
+                    EditPortefeuille = Portefeuille;
+                    Titel = $"Wijzig Portefeuille";
                     OnPropertyChanged();
-                    Titel = $"Wijzig {Portefeuille}";
-                    EditPortefeuille = Portefeuille;                    
                 }
             }
         }
 
-        public ObservableCollection<Aandeel> Aandelen
-        {
-            get
-            {
-                return _aandelen;
-            }
-            set
-            {
-                _aandelen = value;          
-            }
-        }
+        public ObservableCollection<Aandeel> Aandelen { get; set; }
 
-        private Portefeuille editPortefeuille;
 
         public Portefeuille EditPortefeuille
         {
-            get { return editPortefeuille; }
+            get => _editPortefeuille;
             set
             {
                 if (value != null)
-                {                   
-                    editPortefeuille = new Portefeuille(value.Eigenaar);
-                    editPortefeuille.Aandelen = value.Aandelen;
+                {
+                    _editPortefeuille = new Portefeuille(value.Eigenaar);
+                    _editPortefeuille.Aandelen = value.Aandelen;
                     Aandelen = new ObservableCollection<Aandeel>(value.Aandelen);
-                }                   
+                }
                 else
                 {
-                    editPortefeuille = value;                    
-                }                
-                  
+                    _editPortefeuille = value;
+                }
                 OnPropertyChanged();
             }
         }
 
+        #endregion
+
         #region Save changes
 
         //RelayCommand voor de saveCommand
-        public RelayCommand SaveCommand { get; private set; }
+        public RelayCommand SaveCommand { get; }
 
         //Methode waarbij een portefeuille geupdate kan worden. De oude value wordt gelijk gesteld aan de nieuwe van de edit view
         public void SaveChanges()
         {
-
             if (EditPortefeuille.Eigenaar == "")
             {
                 Error = "Gelieve een eigenaar in te geven";
                 OnPropertyChanged("Error");
                 return;
             }
-           
+
             Portefeuille.Eigenaar = EditPortefeuille.Eigenaar;
 
-            Portefeuille.Aandelen = new List<Aandeel>( Aandelen );
+            Portefeuille.Aandelen = new List<Aandeel>(Aandelen);
 
 
             _repository.UpdatePortefeuille(Portefeuille);
@@ -108,7 +104,8 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
             ReturnToViewRequested?.Invoke(true);
         }
 
-        public event Action<Boolean> ReturnToViewRequested;
+        public event Action<bool> ReturnToViewRequested;
+
         #endregion
 
         #region Cancel changes
@@ -128,7 +125,7 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
         //Haal de geselecteerde aandeel op
         public Aandeel SelectedAandeel
         {
-            get { return _selectedAandeel; }
+            get => _selectedAandeel;
             set
             {
                 if (_selectedAandeel != value)
@@ -140,29 +137,26 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
         }
 
         //Delete een aandeel
-        public RelayCommand DeleteCommand { get; private set; }
+        public RelayCommand DeleteCommand { get; }
+
         private void DeleteAandeel()
         {
-            //repository.DeleteAandeel(selectedAandeel);
-            _aandelen.Remove(_selectedAandeel);            
+            Aandelen.Remove(_selectedAandeel);
         }
 
         //Kijkt of de selectedaandeel null is. 
         //Als deze null is zal hij een false retourneren.
 
-        private Boolean CanDeleteAandeel()
+        private bool CanDeleteAandeel()
         {
             return _selectedAandeel != null;
         }
-
-
-
 
         #endregion
 
         #region Add aandeel
 
-        public RelayCommand AddCommand { get; private set; }
+        public RelayCommand AddCommand { get; }
 
         public event Action AddAandeelRequested;
 
@@ -172,20 +166,5 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
         }
 
         #endregion
-
-        public void RefreshAandelen()
-        {
-           Aandelen = new ObservableCollection<Aandeel>(_repository.GetPortefeuilleMetID(Portefeuille).Aandelen);
-        }
-
-
     }
 }
-
-
-// list.contains
-
-    //Obsvervable list maken --> deze biden
-    //ittems uit observable list wegdoen
-    //Hierna 2 lijsten vergelijken
-    // LijstPushen

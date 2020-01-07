@@ -1,19 +1,19 @@
-﻿using StevenBjones.Aandeelbeheer.Models;
-using StevenBjones.Common;
+﻿using System;
 using StevenBjones.Aandeelbeheer.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using StevenBjones.Aandeelbeheer.Models;
+using StevenBjones.Common;
 
 namespace StevenBjones.Aandeelbeheer.ViewModels
 {
-    class PortefeuilleDetailAddViewModel : BaseViewModel
+    internal class PortefeuilleDetailAddViewModel : BaseViewModel
     {
-        private AandeelbeheerRepository _repository;
         private Portefeuille _addPortefeuille = new Portefeuille();
+        private AandeelbeheerRepository _repository;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="repository">Repository waar requests staan naar de dataset</param>
         public PortefeuilleDetailAddViewModel(AandeelbeheerRepository repository)
         {
             _repository = repository;
@@ -22,14 +22,18 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
             CancelCommand = new RelayCommand(CancelChanges);
         }
 
-        private string Error { get; set; }
+        #region  properties
 
+        //String waar de error boodschap wordt bewaard
+        public string Error { get; set; }
+
+        //Nieuw aangemaakte portefeuille
         public Portefeuille Addportefeuille
         {
-            get{ return _addPortefeuille; }
+            get => _addPortefeuille;
             set
             {
-                if(_addPortefeuille != value)
+                if (_addPortefeuille != value)
                 {
                     _addPortefeuille = value;
                     OnPropertyChanged();
@@ -37,9 +41,13 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
             }
         }
 
-        public event Action<Boolean> ReturnToViewRequested;
+        #endregion
 
-        public RelayCommand SaveCommand { get; private set; }
+        public event Action<bool> ReturnToViewRequested;
+
+        #region  save
+
+        public RelayCommand SaveCommand { get; }
 
         public void SaveChanges()
         {
@@ -49,11 +57,15 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
                 OnPropertyChanged("Error");
                 return;
             }
-          
+
             _repository.Addportefeuille(Addportefeuille);
             Addportefeuille = new Portefeuille();
             ReturnToViewRequested?.Invoke(true);
         }
+
+        #endregion
+
+        #region Cancel
 
         public RelayCommand CancelCommand { get; set; }
 
@@ -62,5 +74,7 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
             Addportefeuille = new Portefeuille();
             ReturnToViewRequested?.Invoke(false);
         }
+
+        #endregion
     }
 }

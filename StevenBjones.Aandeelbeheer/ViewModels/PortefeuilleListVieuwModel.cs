@@ -92,11 +92,7 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
             AddPortefeuilleRequested?.Invoke();
         }
 
-
-
         #endregion
-
-
 
         #region Edit Portefeuille
         //RelayCommand voor het editen van een portefeuille
@@ -123,8 +119,5 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
         {
             Portefeuilles = _repository.GetPortefeuilles();
         }
-
-  
-        
     }
 }

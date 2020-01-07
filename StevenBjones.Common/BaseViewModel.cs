@@ -23,7 +23,7 @@ namespace StevenBjones.Common
 				if (_titel != value)
 				{
 					_titel = value;
-					OnPropertyChanged();
+					OnPropertyChanged("Titel");
 				}
 			}
 		}

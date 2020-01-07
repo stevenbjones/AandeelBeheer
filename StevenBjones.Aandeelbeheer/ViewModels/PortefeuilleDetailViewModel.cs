@@ -11,13 +11,22 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
 {
     class PortefeuilleDetailViewModel : BaseViewModel
     {
+        //De repository die gebruikt wordt voor het aanspreken van de dataset
         private AandeelbeheerRepository _repository;
+
+        //Variabele die gebruikt wordt voor de property portefeuille
         private Portefeuille _portefeuille;
 
+        /// <summary>
+        /// Constructor van PortefeuilleDetailViewModel 
+        /// </summary>
+        /// <param name="repository"> Repository waar request naar de dataset staan</param>
         public PortefeuilleDetailViewModel(AandeelbeheerRepository repository)
         {
             _repository = repository;
         }
+
+        #region properties
 
         public Portefeuille Portefeuille
         {
@@ -27,10 +36,12 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
                 if(_portefeuille!= value)
                 {
                     _portefeuille = value;
+                    Titel = $"Portefeuille detail";
                     OnPropertyChanged();
-                    Titel =  $"{Portefeuille}";
                 }
             }
         }
+
+        #endregion
     }
 }

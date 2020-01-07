@@ -23,6 +23,7 @@
                 <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"></ColumnDefinition>
@@ -55,6 +56,7 @@
 				ItemsSource="{Binding Addportefeuille.Aandelen}"
 				Grid.Row="2" Grid.Column="1"
 				></ListBox>
+            <TextBlock  Grid.Row="3" Grid.Column="2" Foreground="Red" Text="{Binding Error}"></TextBlock>
         </Grid>
         <StatusBar
 			 Grid.Row="2"
