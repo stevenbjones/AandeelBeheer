@@ -28,6 +28,7 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
 
         #region properties
 
+        //Property portefeuille
         public Portefeuille Portefeuille
         {
             get { return _portefeuille; }

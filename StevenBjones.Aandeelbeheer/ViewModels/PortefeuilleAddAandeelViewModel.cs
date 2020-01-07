@@ -42,12 +42,16 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
 
         #region properties
 
+        //Property voor errormelding
         public string Error { get; set; }
 
+        //Property die binded is met selected item van listbox
         public Portefeuille Selectedportefeuille { get; set; }
 
+        //Property Bedrijven
         public ObservableCollection<Bedrijf> Bedrijven { get; set; }
 
+        //Propperty die gebruikt wordt om een aandeel toe te voegen
         public Aandeel AddAandeel { get; set; }
 
         #endregion
@@ -93,7 +97,6 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
         //Ga naar portefeuilledetailEditView
         public void CancelChanges()
         {
-
             ReturnToViewRequested?.Invoke(false, _portefeuilleDetailEditViewModel);
         }
 

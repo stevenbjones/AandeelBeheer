@@ -36,6 +36,9 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
             EditCommand = new RelayCommand<Portefeuille>(EditPortefeuille, CanEditPortefeuille);
         }
 
+        #region properties
+
+        //Propery portefeuilles wordt weergegeven 
         public ObservableCollection<Portefeuille> Portefeuilles
         {
             get { return _portefeuilles; }
@@ -48,6 +51,8 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
                 }
             }
         }
+
+        #endregion
 
         #region Delete Portefeuille
 
@@ -64,7 +69,6 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
                 }
             }
         }
-
 
         //Delete een portefeuille
         public RelayCommand DeleteCommand { get; private set; }

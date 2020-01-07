@@ -57,9 +57,10 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
             }
         }
 
+        //Property Observarble lijst van aandelen
         public ObservableCollection<Aandeel> Aandelen { get; set; }
 
-
+        //Property die opgeslagen wordt als nieuwe portefeuille
         public Portefeuille EditPortefeuille
         {
             get => _editPortefeuille;
@@ -148,7 +149,6 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
 
         //Kijkt of de selectedaandeel null is. 
         //Als deze null is zal hij een false retourneren.
-
         private bool CanDeleteAandeel()
         {
             return _selectedAandeel != null;
