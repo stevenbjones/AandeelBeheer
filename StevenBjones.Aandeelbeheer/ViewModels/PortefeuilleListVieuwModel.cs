@@ -20,10 +20,9 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
         private ObservableCollection<Portefeuille> _portefeuilles;
         private Portefeuille _selectedPortefeuille;
 
-        /// <summary>
-        /// Constructor
+        /// Constructor van PortefeuilleListVieuwModel
         /// </summary>
-        /// <param name="repository">De repository die gebruikt wordt voor het aanspreken van de dataset</param>
+        /// <param name="repository">Repository waar functies staan met requests naar de dataset</param>
         public PortefeuilleListVieuwModel(AandeelbeheerRepository repository)
         {
             _repository = repository;
