@@ -79,7 +79,7 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
 
         //Kijkt of de selectedPortefeuille null is. 
         //Als deze null is zal hij een false retourneren.
-        private Boolean CanDeletePortefeuille()
+        public Boolean CanDeletePortefeuille()
         {
             return _selectedPortefeuille != null;
         }

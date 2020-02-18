@@ -12,8 +12,8 @@ namespace StevenBjones.Aandeelbeheer.Data
         public AandeelbeheerContext() : base("dbStevenBjonesAandeelbeheer")
         {
             //2 verschillende database initialators.
-            //Database.SetInitializer(new AandeelbeheerContextDropCreateDatabaseAlways());
-            Database.SetInitializer(new AandeelbeheerContextDropCreateDatabaseIfModelChanges());
+            Database.SetInitializer(new AandeelbeheerContextDropCreateDatabaseAlways());
+            //Database.SetInitializer(new AandeelbeheerContextDropCreateDatabaseIfModelChanges());
         }
 
         //De database sets

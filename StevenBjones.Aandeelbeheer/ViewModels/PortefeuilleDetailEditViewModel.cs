@@ -29,6 +29,8 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
             CancelCommand = new RelayCommand(CancelChanges);
             DeleteCommand = new RelayCommand(DeleteAandeel, CanDeleteAandeel);
             AddCommand = new RelayCommand(AddAandeel);
+
+            
         }
 
         //Haal Aandelen op uit dataset
