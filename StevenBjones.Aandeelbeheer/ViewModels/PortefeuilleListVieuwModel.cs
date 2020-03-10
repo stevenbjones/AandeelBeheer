@@ -106,8 +106,8 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
 
         //Invoke als portefeuille niet null is
         public void EditPortefeuille(Portefeuille portefeuille)
-        {
-            EditPortefeuilleRequested?.Invoke(portefeuille);
+        {          
+            EditPortefeuilleRequested?.Invoke(portefeuille);            
         }
 
         //Kijk na of portefeuille null is niet, als deze null is returned hij false. Dan zal de knop niet gebruikt kunnen worden
