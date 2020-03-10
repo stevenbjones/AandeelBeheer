@@ -168,7 +168,7 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
                         _portefeuilleDetailEditViewModel.ReturnToViewRequested += portefeuilleDetailEditViewModel_ReturnToViewRequested;
                         _portefeuilleDetailEditViewModel.PropertyChanged += portefeuilleDetailEditViewModel_PropertyChanged;
                         _portefeuilleDetailEditViewModel.AddAandeelRequested += portefeuilleDetailEditViewModel_AddAandeelRequested;
-                        CurrentDetailViewModel = _portefeuilleDetailEditViewModel;
+                        CurrentDetailViewModel = _portefeuilleDetailEditViewModel;                        
                     }
                     else
                     {
@@ -251,7 +251,9 @@ namespace StevenBjones.Aandeelbeheer.ViewModels
             switch (e.PropertyName)
             {
                 case "SelectedPortefeuille":
+                    SetDetailViewModel(_portefeuilleDetailViewModel);
                     _portefeuilleDetailViewModel.Portefeuille = _portefeuilleListVieuwModel.SelectedPortefeuille;
+                   
                     break;
                 default:
                     break;
